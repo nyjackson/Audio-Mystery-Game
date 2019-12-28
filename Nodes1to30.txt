@@ -1,0 +1,130 @@
+/*
+ * Text of all story nodes
+ *
+ */
+
+void sn(int id, String filename, int a, int b, int c)
+{
+  NODES[id] = new StoryNode(filename, new int[] {a, b, c});
+}
+
+void casn(int id, String filename, int next)
+{
+  NODES[id] = new CascadingStoryNode(filename, next);
+}
+
+int counter = 0;
+final int JENNY_BODY = counter++;
+final int HOUSE_PRINTS = counter++;
+final int SPOKE_PARENTS = counter++;
+final int PREGNANCY_TEST = counter++;
+final int PARK_PHOTO = counter++;
+final int BOB_PARK = counter++;
+final int CAR_SHOVEL = counter++;
+final int AFFAIR = counter++;
+final int ABUSE = counter++;
+final int BLOODY_ROCK = counter++;
+final int BOB_BODY = counter++;
+final int BOB_PLAN = counter++;
+final int TICKET_DATE = counter++;
+final int OVERPROTECTIVE = counter++;
+final int GARDEN_PRINTS = counter++;
+final int ELLIOT_PRINTS = counter++;
+final int SPLINTERS = counter++;
+final int CONFESSION = counter++;
+
+StoryNode initialize() {
+  sn(0, "introduction", 1, 1, 1);
+  sn(1, "start.wav", 2, 3, 4); // start
+  NODES[2] = new AlternateStoryNode("2.wav", new int[] {5, 9, 13}) {
+      String chooseSound()
+      {
+        return TRIGGERS[JENNY_BODY] ? "enterHousePrints.wav" : "enterHouse.wav";
+      }
+  };
+  NODES[3] = new StoryNodeEffect("3.wav", new int[] {24, 25, 4}) {
+    void doEffect(int i)
+    {
+      TRIGGERS[SPOKE_PARENTS] = true;
+    }
+  };
+  sn(4, "4.wav", 38, 44, 42);
+  sn(5, "5.wav", 6, 7, 8);
+  sn(6, "6.wav", 44, 7, 8);
+  sn(7, "7.wav", 6, 8, 23);
+  NODES[8] = new StoryNodeEffect("8.wav", new int[] {6, 7, 23}) {
+    void doEffect(int i)
+    {
+      TRIGGERS[PREGNANCY_TEST] = true;
+    }
+  };
+  sn(9, "9.wav", 10, 11, 23);
+  sn(10, "10.wav", 11, 10, 23);
+  sn(11, "11.wav", 12, 10, 23);
+  sn(12, "12.wav", 51, 24, 25);
+  sn(13, "13.wav", 27, 35, 14);
+  sn(14, "14.wav", 15, 19, 22);
+  NODES[15] = new Story
+  NODES[18] = new StoryNodeEffect("18.wav", new int[] {19, 21, 22}) {
+    void doEffect(int i)
+    {
+      TRIGGERS[AFFAIR] = true;
+  }
+  };
+  NODES[19] = new StoryNodeEffect("19.wav", new int[] {20, 21, 22}) {
+    void doEffect(int i)
+    {
+      TRIGGERS[ABUSE] = true;
+  }
+  };
+  NODES[20] = new StoryNodeEffect("20.wav", new int[] {19, 21, 22}) {
+    void doEffect(int i)
+    {
+      TRIGGERS[OVERPROTECTIVE] = true;
+  }
+  };
+  sn(21, "21.wav", 20, 19, 22);
+  sn(22, "22.wav", 27, 35, 5);
+  sn(23, "23.wav", 5, 9, 13);
+  sn(24, "24.wav", 27, 25, 26);
+  sn(25, "25.wav", 35, 24, 26);
+  sn(26, "26.wav", 74, 2, 4);
+  NODES[27] = new Story
+  sn(30, "30.wav", 31, 32, 34);
+
+// 97 is go over notes:
+NODES[97] = new CascadingStoryNode("Notes.wav", 150);
+
+int i = 150;
+NODES[i] = new SimpleClue("Clue_PregTest.wav", ++i, PREGNANCY_TEST);
+NODES[i] = new SimpleClue("Clue_ParkPhoto.wav", ++i, PARK_PHOTO);
+NODES[i] = new SimpleClue("Clue_BobPark.wav", ++i, BOB_PARK);
+NODES[i] = new SimpleClue("Clue_ShovelCar.wav", ++i, CAR_SHOVEL);
+NODES[i] = new SimpleClue("Clue_Affair.wav", ++i, AFFAIR);
+NODES[i] = new SimpleClue("Clue_Abusive.wav", ++i, ABUSE);
+NODES[i] = new SimpleClue("Clue_BloodyRock.wav", ++i, BLOODY_ROCK);
+NODES[i] = new SimpleClue("Clue_JennyBody.wav", ++i, JENNY_BODY);
+NODES[i] = new ClueNode("Clue_Footprints.wav", ++i) {
+  boolean hasNote() {
+    return (TRIGGERS[HOUSE_PRINTS] && ! TRIGGERS[BOB_BODY]);
+  }
+};
+NODES[i] = new SimpleClue("Clue_BobBody.wav", ++i, BOB_BODY);
+NODES[i] = new SimpleClue("Clue_EscapePlan.wav", ++i, BOB_PLAN);
+NODES[i] = new ClueNode("Clue_TicketDate.wav", ++i) {
+  boolean hasNote() {
+    return (TRIGGERS[TICKET_DATE] && ! TRIGGERS[BOB_BODY]);
+  }
+};
+NODES[i] = new SimpleClue("Clue_ElliotOverprotective.wav", ++i, OVERPROTECTIVE);
+NODES[i] = new SimpleClue("Clue_FootprintsGarden.wav", ++i, GARDEN_PRINTS);
+NODES[i] = new SimpleClue("Clue_ElliotMatchingFootprints.wav", ++i, ELLIOT_PRINTS);
+NODES[i] = new SimpleClue("Clue_BobsBodyGarden.wav", ++i, BOB_BODY);
+NODES[i] = new SimpleClue("Clue_Splinters.wav", ++i, SPLINTERS);
+NODES[i] = new SimpleClue("Clue_Confession.wav", 149, CONFESSION);
+// End of notes
+sn(149, "endnotes.wav", 103, 99, 97 /* or 150?*/);
+
+
+return NODES[0];
+}
