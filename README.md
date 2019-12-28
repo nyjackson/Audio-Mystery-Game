@@ -3,9 +3,9 @@ This is a audio based mystery game made with Edward Keenan, Szymon Baldyga ,and 
 
 A big thanks to our voice actors! 
 Credits to:
-Suzannah Atkinson as Martha Waters
-Luca Barton-Cain as Mark Griffiths
-James Christensen as Melvin Hunt
+Suzannah Atkinson as Martha Waters, 
+Luca Barton-Cain as Mark Griffiths, 
+James Christensen as Melvin Hunt, and
 Jeff Montoya as Elliot Waters
 
 Introduction:
